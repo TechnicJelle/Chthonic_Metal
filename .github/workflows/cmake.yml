@@ -25,6 +25,11 @@ jobs:
       run: |
         sudo apt-get install -y libgl1-mesa-dev mesa-utils xvfb libudev-dev libopenal-dev libvorbis-dev libflac-dev libxrandr-dev libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev libgl1-mesa-dev xorg-dev
         xvfb-run glxinfo
+    
+    - name: Tree
+      run: |
+        sudo apt install -y tree
+        tree
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
