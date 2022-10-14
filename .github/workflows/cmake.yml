@@ -23,7 +23,7 @@ jobs:
     - name: Test glxinfo
       # https://github.com/openrndr/orx/blob/0a24780d8446f998b9f13b61a328b97d91878500/.github/workflows/generate-screenshots.yml?rgh-link-date=2022-08-24T08%3A31%3A43Z#L30
       run: |
-        sudo apt-get install -y mesa-utils xvfb
+        sudo apt-get install -y libgl1-mesa-dev mesa-utils xvfb
         xvfb-run glxinfo
 
     - name: Configure CMake
