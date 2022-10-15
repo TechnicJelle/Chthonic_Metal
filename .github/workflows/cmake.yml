@@ -15,16 +15,10 @@ jobs:
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v3
-    
-    - name: Test glxinfo
-      # https://github.com/openrndr/orx/blob/0a24780d8446f998b9f13b61a328b97d91878500/.github/workflows/generate-screenshots.yml?rgh-link-date=2022-08-24T08%3A31%3A43Z#L30
-      run: |
-        sudo apt-get install -y libgl1-mesa-dev mesa-utils xvfb libudev-dev libopenal-dev libvorbis-dev libflac-dev libxrandr-dev libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev libgl1-mesa-dev xorg-dev
-        xvfb-run glxinfo
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
@@ -37,7 +31,6 @@ jobs:
     
     - name: Tree
       run: |
-        sudo apt install -y tree
         tree
       
     - name: Upload a Build Artifact
