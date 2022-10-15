@@ -34,7 +34,7 @@ jobs:
         cd build
         mkdir rel
         mv .\Release\ .\rel\
-        mv .\rel\Release\ ".\rel\$((Get-Item $(pwd)).Basename)-$(git rev-parse --short HEAD)"
+        mv .\rel\Release\ ".\rel\$((Get-Item $(pwd)).parent.Basename)-$(git rev-parse --short HEAD)"
       
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.0
