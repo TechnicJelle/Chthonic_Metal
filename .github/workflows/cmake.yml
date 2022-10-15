@@ -31,6 +31,7 @@ jobs:
       
     - name: Prep for upload
       run: |
+        cd build
         mkdir rel
         mv .\Release\ .\rel\
         mv .\rel\Release\ .\rel\CM-$(git rev-parse --short HEAD)
