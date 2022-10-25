@@ -3,19 +3,19 @@ project(Chthonic_Metal)
 
 set(CMAKE_CXX_STANDARD 23)
 
-include(FetchContent)
-FetchContent_Declare(SFML
-        GIT_REPOSITORY https://github.com/SFML/SFML.git
-        GIT_TAG 2.6.x)
-FetchContent_MakeAvailable(SFML)
+# Find SFML shared libraries
+find_package(SFML 2.5
+        COMPONENTS
+        system window graphics network audio REQUIRED
+        )
 
 add_executable(Chthonic_Metal src/main.cpp)
 
-target_link_libraries(Chthonic_Metal PRIVATE sfml-graphics)
-target_compile_features(Chthonic_Metal PRIVATE cxx_std_17)
-if (WIN32 AND BUILD_SHARED_LIBS)
-    add_custom_command(TARGET Chthonic_Metal POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:Chthonic_Metal> $<TARGET_FILE_DIR:Chthonic_Metal> COMMAND_EXPAND_LISTS)
-endif()
+# Copy assets folder to build directory
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
-install(TARGETS Chthonic_Metal)
+# Link executable to required SFML libraries
+target_link_libraries(Chthonic_Metal sfml-graphics)
+
+install(TARGETS Chthonic_Metal DESTINATION bin)
+
