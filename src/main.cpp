@@ -1,34 +1,46 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
-int main()
+#include "Engine/Game.hpp"
+#include "Scenes/MainMenu.hpp"
+
+int main(int argc, char** argv)
 {
-	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Chthonic Metal - v0.0.1");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
+	// Default Settings
+	int width = 1920;
+	int height = 1080;
+	bool vsync = true;
 
-	sf::Texture texture;
-	if (!texture.loadFromFile("assets/vase.png"))
-		return 1;
-
-	sf::Sprite sprite = sf::Sprite(texture);
-	sprite.setPosition(200, 150);
-
-	while (window.isOpen())
-	{
-		sf::Event event{};
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
+	// Parse Arguments for Settings
+	if(argc > 1) {
+		if (argc > 2) {
+			width = std::stoi(argv[1]);
+			height = std::stoi(argv[2]);
 		}
-
-		window.clear();
-
-		window.draw(shape);
-		window.draw(sprite);
-
-		window.display();
+		if (argc > 3) {
+			vsync = std::stoi(argv[3]);
+		}
 	}
+
+	// Create Game with Settings
+	Engine::Game game = Engine::Game(width, height, "Chthonic Metal - v0.0.1", vsync);
+
+	// Create Scenes
+
+	// >Main Menu
+	MainMenu mainMenu = MainMenu();
+	game.addScene(&mainMenu);
+
+	// >Character Selection Screen
+
+	// >Fight Screen
+
+	// Start at Main Menu
+	game.setActiveScene(&mainMenu);
+	mainMenu.setup();
+
+	// Run Game
+	game.run();
 
 	return 0;
 }
