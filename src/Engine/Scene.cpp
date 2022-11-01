@@ -8,12 +8,17 @@
 
 namespace Engine
 {
+	void Scene::setWindow(sf::RenderWindow* window)
+	{
+		this->window = window;
+	}
+
 	void Scene::setup()
 	{
 		printf("Scene setup %p\n", this);
 	}
 
-	void Scene::update(sf::RenderWindow* window, float deltaTime)
+	void Scene::update(float deltaTime)
 	{
 //		printf("Scene update, %f\n", deltaTime);
 	}

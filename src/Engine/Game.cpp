@@ -5,6 +5,7 @@
 #include <SFML/Window/Event.hpp>
 
 #include "Game.hpp"
+#include "Random.hpp"
 
 namespace Engine
 {
@@ -17,6 +18,8 @@ namespace Engine
 		activeScene = nullptr;
 
 		frameTimePoint1 = std::chrono::system_clock::now();
+
+		Random::randInit();
 	}
 
 	void Game::run()
@@ -41,7 +44,7 @@ namespace Engine
 
 			window.clear();
 
-			activeScene->update(&window, fElapsedTime);
+			activeScene->update(fElapsedTime);
 
 			window.display();
 
@@ -60,6 +63,7 @@ namespace Engine
 
 	void Game::addScene(Scene* scene)
 	{
+		scene->setWindow(&window);
 		scenes.push_back(scene);
 	}
 

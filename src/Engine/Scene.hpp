@@ -11,10 +11,15 @@ namespace Engine
 {
 	class Scene
 	{
+	protected:
+		sf::RenderWindow* window{};
+
 	public:
+		void setWindow(sf::RenderWindow* window);
+
 		virtual void setup();
 
-		virtual void update(sf::RenderWindow* window, float deltaTime);
+		virtual void update(float deltaTime);
 	};
 }
 
