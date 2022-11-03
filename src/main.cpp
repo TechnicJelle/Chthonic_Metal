@@ -23,12 +23,13 @@ int main(int argc, char** argv)
 	}
 
 	// Create Game with Settings
-	Engine::Game game = Engine::Game(width, height, "Chthonic Metal - v0.0.1", vsync);
+	sf::RenderWindow* window;
+	Engine::Game game = Engine::Game(width, height, "Chthonic Metal - v0.0.1", vsync, &window);
 
 	// Create Scenes
 
 	// >Main Menu
-	MainMenu mainMenu = MainMenu();
+	MainMenu mainMenu = MainMenu(window);
 	game.addScene(&mainMenu);
 
 	// >Character Selection Screen

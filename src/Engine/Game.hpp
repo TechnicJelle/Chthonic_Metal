@@ -27,7 +27,7 @@ namespace Engine
 		uint lastFPS = 0;
 
 	public:
-		Game(int width, int height, std::string title, bool vsync);
+		Game(int width, int height, std::string title, bool vsync, sf::RenderWindow** outWindow);
 
 		void run();
 

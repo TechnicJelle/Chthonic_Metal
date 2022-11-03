@@ -9,15 +9,21 @@
 #include <SFML/Graphics/Text.hpp>
 
 #include "../Engine/Scene.hpp"
+#include "../Engine/Button.hpp"
 
 class MainMenu : public Engine::Scene
 {
 private:
-	sf::CircleShape circle;
 	sf::Font titleFont;
 	sf::Text titleText;
+	Engine::Button* playButton;
+	Engine::Button* quitButton;
+	sf::RectangleShape highscoresPanel;
+	sf::Text highscoresText;
 
 public:
+	explicit MainMenu(sf::RenderWindow* window);
+
 	void setup() override;
 
 	void update(float deltaTime) override;

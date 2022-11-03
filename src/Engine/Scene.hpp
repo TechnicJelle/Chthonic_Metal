@@ -6,17 +6,23 @@
 #define CHTHONIC_METAL_SCENE_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "GameObject.hpp"
 
 namespace Engine
 {
 	class Scene
 	{
 	protected:
-		sf::RenderWindow* window{};
+		sf::RenderWindow* window;
+		std::vector<GameObject*> gameObjects;
+
+	private:
+		void drawGameObjects();
+
+	protected:
+		explicit Scene(sf::RenderWindow* window);
 
 	public:
-		void setWindow(sf::RenderWindow* window);
-
 		virtual void setup();
 
 		virtual void update(float deltaTime);

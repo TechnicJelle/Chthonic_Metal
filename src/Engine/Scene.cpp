@@ -8,8 +8,9 @@
 
 namespace Engine
 {
-	void Scene::setWindow(sf::RenderWindow* window)
+	Scene::Scene(sf::RenderWindow* window)
 	{
+		printf("Scene created\n");
 		this->window = window;
 	}
 
@@ -20,6 +21,14 @@ namespace Engine
 
 	void Scene::update(float deltaTime)
 	{
-//		printf("Scene update, %f\n", deltaTime);
+		drawGameObjects();
+	}
+
+	void Scene::drawGameObjects()
+	{
+		for (GameObject* gameObject : gameObjects)
+		{
+			gameObject->draw();
+		}
 	}
 }

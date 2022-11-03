@@ -9,11 +9,13 @@
 
 namespace Engine
 {
-	Game::Game(int width, int height, std::string title, bool vsync)
+	Game::Game(int width, int height, std::string title, bool vsync, sf::RenderWindow** outWindow)
 	{
 		this->title = std::move(title);
 		window.create(sf::VideoMode(width, height), this->title);
 		window.setVerticalSyncEnabled(vsync);
+		*outWindow = &window;
+
 		scenes = std::vector<Scene*>();
 		activeScene = nullptr;
 
@@ -63,7 +65,6 @@ namespace Engine
 
 	void Game::addScene(Scene* scene)
 	{
-		scene->setWindow(&window);
 		scenes.push_back(scene);
 	}
 
