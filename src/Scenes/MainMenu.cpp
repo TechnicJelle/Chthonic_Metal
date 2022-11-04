@@ -34,7 +34,7 @@ MainMenu::MainMenu(sf::RenderWindow* window) : Scene(window)
 	playButton = new Engine::Button(
 			window,
 			sf::Vector2f((float)window->getSize().x * 0.2f, (float)window->getSize().y * 0.4f),
-			sf::Vector2f(400, 200), //TODO: Make screen-size dependent
+			sf::Vector2f((float)window->getSize().x * 0.26f, (float)window->getSize().y * 0.18f),
 			sf::Color::Blue,
 			"Start",
 			titleFont,
@@ -45,7 +45,7 @@ MainMenu::MainMenu(sf::RenderWindow* window) : Scene(window)
 	quitButton = new Engine::Button(
 			window,
 			sf::Vector2f((float)window->getSize().x * 0.3f, (float)window->getSize().y * 0.6f),
-			sf::Vector2f(300, 150), //TODO: Make screen-size dependent
+			sf::Vector2f((float)window->getSize().x * 0.16f, (float)window->getSize().y * 0.12f),
 			sf::Color::Red,
 			"Quit",
 			titleFont,
