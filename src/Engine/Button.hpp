@@ -15,6 +15,8 @@ class Button : public Engine::GameObject
 	{
 	private:
 		sf::Text text;
+		sf::Color defaultColour;
+		sf::Color hoverColour;
 
 	public:
 		Button(sf::RenderWindow* window, sf::Vector2f position, sf::Vector2f size, sf::Color btnColour, const std::string &btnText, const sf::Font &font, sf::Color textColour);
