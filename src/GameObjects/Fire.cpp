@@ -18,14 +18,29 @@ Fire::Fire(sf::RenderWindow* window) : Engine::GameObject(window, sf::Vector2f(0
 	frameBufferInit();
 }
 
+void Fire::update(float deltaTime)
+{
+	//https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-the-core-engine--gamedev-7493#timestepping
+	// Store the time elapsed since the last frame began
+	accumulator += deltaTime;
+
+	// Avoid spiral of death and clamp dt, thus clamping
+	// how many times the UpdatePhysics can be called in
+	// a single game loop.
+	if (accumulator > 0.2f)
+		accumulator = 0.2f;
+
+	while (accumulator >= dt)
+	{
+		accumulator -= dt;
+
+		doFire();
+		frameBufferToPixels();
+	}
+}
+
 void Fire::draw()
 {
-//	for (int i = 0; i < 100; ++i)
-//		frameBuffer[Random::randi((int)W * (int)H)] = Random::randi((int)palette.size());
-
-	doFire();
-	frameBufferToPixels();
-
 	window->draw(sprite);
 //	drawPalette(&palette, window);
 }

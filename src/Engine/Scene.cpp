@@ -21,7 +21,15 @@ namespace Engine
 
 	void Scene::update(float deltaTime)
 	{
+		updateGameObjects(deltaTime);
 		drawGameObjects();
+	}
+
+	void Scene::updateGameObjects(float deltaTime) {
+		for (GameObject* gameObject : gameObjects)
+		{
+			gameObject->update(deltaTime);
+		}
 	}
 
 	void Scene::drawGameObjects()

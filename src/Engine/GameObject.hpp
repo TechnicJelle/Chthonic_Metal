@@ -20,6 +20,8 @@ namespace Engine
 	public:
 		GameObject(sf::RenderWindow* window, sf::Vector2f position, sf::Vector2f size, sf::Color colour = sf::Color::Transparent);
 
+		virtual void update(float deltaTime);
+
 		virtual void draw();
 	};
 }

@@ -14,6 +14,11 @@ namespace Engine
 		rect.setFillColor(colour);
 	}
 
+	void GameObject::update(float deltaTime)
+	{
+		
+	}
+
 	void GameObject::draw()
 	{
 		window->draw(rect);

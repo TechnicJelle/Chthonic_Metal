@@ -17,6 +17,7 @@ namespace Engine
 		std::vector<GameObject*> gameObjects;
 
 	private:
+		void updateGameObjects(float deltaTime);
 		void drawGameObjects();
 
 	protected:
