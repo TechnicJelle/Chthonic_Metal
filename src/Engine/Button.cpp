@@ -25,9 +25,7 @@ namespace Engine
 
 	bool Button::isHovered()
 	{
-		return rect.getGlobalBounds().contains(
-				(float)sf::Mouse::getPosition(*window).x,
-				(float)sf::Mouse::getPosition(*window).y);
+		return rect.getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*window));
 	}
 
 	bool Button::isClicked()

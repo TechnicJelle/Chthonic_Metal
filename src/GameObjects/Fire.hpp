@@ -28,12 +28,12 @@ private:
 	std::vector<sf::Color> palette;
 
 	// Fire variables
-	uint PIXEL_SIZE = -1;
-	uint PXL_WIDTH = -1;
-	uint PXL_HEIGHT = -1;
-	uint PXL_TOTAL = -1;
+	unsigned int PIXEL_SIZE = -1;
+	unsigned int PXL_WIDTH = -1;
+	unsigned int PXL_HEIGHT = -1;
+	unsigned int PXL_TOTAL = -1;
 
-	uint* firePixels;
+	unsigned int* firePixels;
 
 private:
 	// Palette functions
@@ -44,7 +44,7 @@ private:
 	static void drawPalette(std::vector<sf::Color>* palette, sf::RenderWindow* window);
 
 	// Fire functions
-	uint* createFireArray();
+	unsigned int* createFireArray();
 
 	void drawFireArray();
 

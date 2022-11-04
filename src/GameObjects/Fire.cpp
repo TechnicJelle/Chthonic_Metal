@@ -69,9 +69,9 @@ void Fire::drawPalette(std::vector<sf::Color>* palette, sf::RenderWindow* window
 	}
 }
 
-uint* Fire::createFireArray()
+unsigned int* Fire::createFireArray()
 {
-	uint* array = new uint[PXL_TOTAL];
+	unsigned int* array = new unsigned int[PXL_TOTAL];
 	for (int i = 0; i < PXL_TOTAL; i++)
 	{
 		array[i] = 0;
@@ -101,18 +101,18 @@ void Fire::drawFireArray()
 
 void Fire::doFire()
 {
-	for(uint x = 0 ; x < PXL_WIDTH; x++) {
-		for (uint y = 1; y < PXL_HEIGHT ; y++) {
-			uint colourIndex = firePixels[x + (y * PXL_WIDTH)];
+	for(unsigned int x = 0 ; x < PXL_WIDTH; x++) {
+		for (unsigned int y = 1; y < PXL_HEIGHT ; y++) {
+			unsigned int colourIndex = firePixels[x + (y * PXL_WIDTH)];
 			if(colourIndex) {
-				uint rnd = Random::randi(0, 3);
-				uint indexX = (x - rnd + 1) % PXL_WIDTH;
-				uint indexY = y - 1;
+				unsigned int rnd = Random::randi(0, 3);
+				unsigned int indexX = (x - rnd + 1) % PXL_WIDTH;
+				unsigned int indexY = y - 1;
 				firePixels[indexX + (indexY * PXL_WIDTH)] = colourIndex - rnd % 2;
 			}
 			else {
-				uint indexX = x;
-				uint indexY = y - 1;
+				unsigned int indexX = x;
+				unsigned int indexY = y - 1;
 				firePixels[indexX + (indexY * PXL_WIDTH)] = 0;
 			}
 		}
