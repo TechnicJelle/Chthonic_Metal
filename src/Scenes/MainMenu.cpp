@@ -3,10 +3,13 @@
 //
 
 #include <memory>
+#include <SFML/Window/Keyboard.hpp>
 #include "MainMenu.hpp"
+#include "../GameObjects/Fire.hpp"
 
 MainMenu::MainMenu(sf::RenderWindow* window) : Scene(window)
 {
+	// === Text ===
 	if (!titleFont.loadFromFile("assets/fonts/Another Danger - Demo.otf"))
 	{
 		throw std::runtime_error("Could not load titleFont");
@@ -16,10 +19,22 @@ MainMenu::MainMenu(sf::RenderWindow* window) : Scene(window)
 	titleText.setOrigin(titleText.getLocalBounds().width / 2, titleText.getLocalBounds().height / 2);
 	titleText.setPosition((float)window->getSize().x / 2.0f, (float)window->getSize().y * 0.2f);
 
+	highscoresPanel = sf::RectangleShape(sf::Vector2f((float)window->getSize().x * 0.4f, (float)window->getSize().y * 0.5f));
+	highscoresPanel.setFillColor(sf::Color::White);
+	highscoresPanel.setPosition((float)window->getSize().x * 0.5f, (float)window->getSize().y * 0.4f);
+
+	highscoresText = sf::Text("Highscores\nTechnicJelle\t\t\tinf", titleFont, window->getSize().y / 20);
+	highscoresText.setPosition(highscoresPanel.getPosition().x + highscoresPanel.getSize().x * 0.04f, highscoresPanel.getPosition().y);
+	highscoresText.setFillColor(sf::Color::Black);
+
+	// === GameObjects ===
+	Fire* fire = new Fire(window);
+	gameObjects.push_back(fire);
+
 	playButton = new Engine::Button(
 			window,
 			sf::Vector2f((float)window->getSize().x * 0.2f, (float)window->getSize().y * 0.4f),
-			sf::Vector2f(400, 200),
+			sf::Vector2f(400, 200), //TODO: Make screen-size dependent
 			sf::Color::Blue,
 			"Start",
 			titleFont,
@@ -30,22 +45,13 @@ MainMenu::MainMenu(sf::RenderWindow* window) : Scene(window)
 	quitButton = new Engine::Button(
 			window,
 			sf::Vector2f((float)window->getSize().x * 0.3f, (float)window->getSize().y * 0.6f),
-			sf::Vector2f(300, 150),
+			sf::Vector2f(300, 150), //TODO: Make screen-size dependent
 			sf::Color::Red,
 			"Quit",
 			titleFont,
 			sf::Color::White);
 
 	gameObjects.push_back(quitButton);
-
-
-	highscoresPanel = sf::RectangleShape(sf::Vector2f((float)window->getSize().x * 0.4f, (float)window->getSize().y * 0.5f));
-	highscoresPanel.setFillColor(sf::Color::White);
-	highscoresPanel.setPosition((float)window->getSize().x * 0.5f, (float)window->getSize().y * 0.4f);
-
-	highscoresText = sf::Text("Highscores\nTechnicJelle\t\t\tinf", titleFont, window->getSize().y / 20);
-	highscoresText.setPosition(highscoresPanel.getPosition().x + highscoresPanel.getSize().x * 0.04f, highscoresPanel.getPosition().y);
-	highscoresText.setFillColor(sf::Color::Black);
 }
 
 void MainMenu::setup()
@@ -70,6 +76,13 @@ void MainMenu::update(float deltaTime)
 	if (quitButton->isClicked())
 	{
 		printf("Quit button clicked\n");
+		exit(0);
+	}
+
+	// If Escape Key is pressed, exit the game. Only for the Main Menu!
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		printf("Escape key pressed\n");
 		exit(0);
 	}
 }
