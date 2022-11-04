@@ -27,7 +27,7 @@ void Fire::draw()
 	frameBufferToPixels();
 
 	window->draw(sprite);
-	drawPalette(&palette, window);
+//	drawPalette(&palette, window);
 }
 
 std::vector<sf::Color> Fire::makePalette()
@@ -58,7 +58,7 @@ std::vector<sf::Color> Fire::makePalette()
 	}
 }
 
-void Fire::drawPalette(std::vector<sf::Color>* palette, sf::RenderWindow* window)
+[[maybe_unused]] void Fire::drawPalette(std::vector<sf::Color>* palette, sf::RenderWindow* window)
 {
 	for (int i = 0; i < palette->size(); i++)
 	{

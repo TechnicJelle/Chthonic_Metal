@@ -48,7 +48,7 @@ private:
 
 	[[maybe_unused]] static void printPalette(std::vector<sf::Color>* palette);
 
-	static void drawPalette(std::vector<sf::Color>* palette, sf::RenderWindow* window);
+	[[maybe_unused]] static void drawPalette(std::vector<sf::Color>* palette, sf::RenderWindow* window);
 
 	// GameObject functions
 public:
