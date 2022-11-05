@@ -38,7 +38,6 @@ int main(int argc, char** argv)
 
 	// Start at Main Menu
 	game.setActiveScene(&mainMenu);
-	mainMenu.setup();
 
 	// Run Game
 	game.run();

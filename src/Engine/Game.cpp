@@ -72,6 +72,7 @@ namespace Engine
 	{
 		activeScene = scene;
 		printf("Active scene set to %s, at %p\n", typeid(*scene).name(), scene);
+		activeScene->onActivate();
 	}
 
 	uint Game::getFPS() const

@@ -24,7 +24,7 @@ namespace Engine
 		explicit Scene(sf::RenderWindow* window);
 
 	public:
-		virtual void setup();
+		virtual void onActivate();
 
 		virtual void update(float deltaTime);
 	};

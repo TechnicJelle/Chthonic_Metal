@@ -2,15 +2,17 @@
 // Created by technicjelle on 30/10/22.
 //
 
-#include <memory>
 #include <SFML/Window/Keyboard.hpp>
+#include <filesystem>
+
 #include "MainMenu.hpp"
 #include "../GameObjects/Fire.hpp"
+#include "../Engine/Utils.hpp"
 
 MainMenu::MainMenu(sf::RenderWindow* window) : Scene(window)
 {
 	// === Text ===
-	if (!titleFont.loadFromFile("assets/fonts/Another Danger - Demo.otf"))
+	if (!titleFont.loadFromFile("assets/fonts/Another Danger/Another Danger - Demo.otf"))
 	{
 		throw std::runtime_error("Could not load titleFont");
 	}
@@ -23,8 +25,21 @@ MainMenu::MainMenu(sf::RenderWindow* window) : Scene(window)
 	highscoresPanel.setFillColor(sf::Color::White);
 	highscoresPanel.setPosition((float)window->getSize().x * 0.5f, (float)window->getSize().y * 0.4f);
 
-	highscoresText = sf::Text("Highscores\nTechnicJelle\t\t\tinf", titleFont, window->getSize().y / 20);
-	highscoresText.setPosition(highscoresPanel.getPosition().x + highscoresPanel.getSize().x * 0.04f, highscoresPanel.getPosition().y);
+	highscoresHeaderText = sf::Text("Highscores", titleFont, window->getSize().y / 20);
+	highscoresHeaderText.setPosition(
+			highscoresPanel.getPosition().x + highscoresPanel.getSize().x * 0.04f,
+			highscoresPanel.getPosition().y + highscoresPanel.getSize().y * 0.01f);
+	highscoresHeaderText.setFillColor(sf::Color::Black);
+
+	if (!highscoresFont.loadFromFile("assets/fonts/Teko/Teko-Medium.ttf"))
+	{
+		throw std::runtime_error("Could not load highscoresFont");
+	}
+
+	highscoresText = sf::Text("Loading highscores...", highscoresFont, window->getSize().y / 20);
+	highscoresText.setPosition(
+			highscoresPanel.getPosition().x + highscoresPanel.getSize().x * 0.05f,
+			highscoresPanel.getPosition().y + highscoresPanel.getSize().y * 0.2f);
 	highscoresText.setFillColor(sf::Color::Black);
 
 	// === GameObjects ===
@@ -54,9 +69,11 @@ MainMenu::MainMenu(sf::RenderWindow* window) : Scene(window)
 	gameObjects.push_back(quitButton);
 }
 
-void MainMenu::setup()
+void MainMenu::onActivate()
 {
-	Scene::setup();
+	Scene::onActivate();
+
+	loadHighscores();
 }
 
 void MainMenu::update(float deltaTime)
@@ -64,6 +81,7 @@ void MainMenu::update(float deltaTime)
 	Scene::update(deltaTime);
 
 	window->draw(highscoresPanel);
+	window->draw(highscoresHeaderText);
 	window->draw(highscoresText);
 
 	window->draw(titleText);
@@ -85,4 +103,55 @@ void MainMenu::update(float deltaTime)
 		printf("Escape key pressed\n");
 		exit(0);
 	}
+}
+
+void MainMenu::loadHighscores()
+{
+	Csv_t csv;
+
+	if (std::filesystem::exists(highscoresFile))
+	{
+		if (!csv.mmap(highscoresFile))
+		{
+			highscoresText.setString("Error loading in the highscores");
+		}
+		else
+		{
+			std::string highscoresString;
+			/*const Row_t header = csv.header();
+
+			for (const Cell_t cell : header)
+			{
+				std::string value;
+				cell.read_value(value);
+				highscoresString += value + " ";
+			}
+			highscoresString += "\n";*/
+
+			for (const Row_t row : csv)
+			{
+				for (const Cell_t cell : row)
+				{
+					std::string value;
+					cell.read_value(value);
+					highscoresString += value + " ";
+				}
+				highscoresString += "\n";
+			}
+			highscoresText.setString(highscoresString);
+			return; //do not center the text
+		}
+	}
+	else
+	{
+		highscoresText.setString("No highscores yet");
+	}
+
+	//position in middle of panel:
+	highscoresText.setOrigin(
+			highscoresText.getLocalBounds().width / 2,
+			highscoresText.getLocalBounds().height / 2);
+	highscoresText.setPosition(
+			highscoresPanel.getPosition().x + highscoresPanel.getSize().x * 0.48f,
+			highscoresPanel.getPosition().y + (highscoresPanel.getSize().y - highscoresHeaderText.getLocalBounds().height / 2) / 2);
 }

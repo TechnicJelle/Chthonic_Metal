@@ -14,19 +14,25 @@
 class MainMenu : public Engine::Scene
 {
 private:
+	const std::string highscoresFile = "assets/highscores.cmgt"; //TODO (once highscores saving is implemented): Remove "assets/" from this string
+
 	sf::Font titleFont;
 	sf::Text titleText;
 	Engine::Button* playButton;
 	Engine::Button* quitButton;
 	sf::RectangleShape highscoresPanel;
+	sf::Text highscoresHeaderText;
+	sf::Font highscoresFont;
 	sf::Text highscoresText;
 
 public:
 	explicit MainMenu(sf::RenderWindow* window);
 
-	void setup() override;
+	void onActivate() override;
 
 	void update(float deltaTime) override;
+
+	void loadHighscores();
 };
 
 

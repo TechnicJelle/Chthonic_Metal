@@ -6,6 +6,19 @@
 #define CHTHONIC_METAL_UTILS_HPP
 
 #include <SFML/Graphics/Color.hpp>
+#include "../../include/csv2/csv2.hpp"
+
+typedef csv2::Reader<
+			csv2::delimiter<','>,
+			csv2::quote_character<'"'>,
+			csv2::first_row_is_header<true>,
+			csv2::trim_policy::trim_whitespace
+		>
+			Csv_t;
+
+typedef Csv_t::Row Row_t;
+
+typedef Csv_t::Cell Cell_t;
 
 namespace Utils {
 	inline sf::Color lerpColour(sf::Color& start, sf::Color& end, float percent) {

@@ -14,9 +14,9 @@ namespace Engine
 		this->window = window;
 	}
 
-	void Scene::setup()
+	void Scene::onActivate()
 	{
-		printf("Scene setup %p\n", this);
+		printf("Scene onActivate %p\n", this);
 	}
 
 	void Scene::update(float deltaTime)
