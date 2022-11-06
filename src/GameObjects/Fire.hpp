@@ -33,12 +33,9 @@ private:
 
 	std::vector<sf::Color> palette;
 
-	// Framebuffer variables
-	///index into the palette
-	sf::Uint8* frameBuffer = new sf::Uint8[W * H];
-
 	// SFML Image variables
 	///the actual coloured pixels that will be drawn to the screen
+	///Alpha channel is the colour index (index into the palette)
 	sf::Uint8* pixels = new sf::Uint8[W*H*4];
 	sf::Texture texture;
 	sf::Sprite sprite;
@@ -58,7 +55,7 @@ private:
 	// Framebuffer functions
 	void frameBufferInit();
 
-	void frameBufferToPixels();
+	void setPixel(unsigned int x, unsigned int y, unsigned int colourIndex);
 
 	// Fire functions
 	void doFire();

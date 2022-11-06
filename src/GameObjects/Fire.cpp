@@ -35,7 +35,7 @@ void Fire::update(float deltaTime)
 		accumulator -= dt;
 
 		doFire();
-		frameBufferToPixels();
+		texture.update(pixels);
 	}
 }
 
@@ -92,44 +92,40 @@ void Fire::frameBufferInit()
 	//Fill with black
 	for (int x = 0; x < W; x++)
 		for (int y = 0; y < H; y++)
-			frameBuffer[x + y * W] = 0;
+			setPixel(x, y, 0);
 
 	//Set the bottom row to white
 	for (int x = 0; x < W; x++)
-		frameBuffer[x + (H - 1) * W] = (sf::Uint8)palette.size() - 1;
+		setPixel(x, (H - 1), (sf::Uint8)palette.size() - 1);
 
-}
-
-void Fire::frameBufferToPixels()
-{
-	for (int x = 0; x < W; x++)
-		for (int y = 0; y < H; y++)
-		{
-			sf::Color c = palette[frameBuffer[x + y * W]];
-			pixels[(x + y * W) * 4 + 0] = c.r;
-			pixels[(x + y * W) * 4 + 1] = c.g;
-			pixels[(x + y * W) * 4 + 2] = c.b;
-			pixels[(x + y * W) * 4 + 3] = 255;
-		}
-
-	texture.update(pixels);
 }
 
 void Fire::doFire()
 {
 	for(unsigned int x = 0 ; x < W; x++) {
 		for (unsigned int y = 1; y < H ; y++) {
-			unsigned int colourIndex = frameBuffer[x + (y * W)];
+			unsigned int colourIndex = 255 - pixels[(x + y * W) * 4 + 3];
 			unsigned int indexY = y - 1;
 			if(colourIndex) {
 				unsigned int rnd = Random::randi(0, 3);
 				unsigned int indexX = (x - rnd + 1) % W;
-				frameBuffer[indexX + (indexY * W)] = colourIndex - rnd % 2;
+				setPixel(indexX, indexY, colourIndex - (rnd & 1));
 			}
 			else {
 				unsigned int indexX = x;
-				frameBuffer[indexX + (indexY * W)] = 0;
+				setPixel(indexX, indexY, 0);
 			}
 		}
 	}
+}
+
+void Fire::setPixel(unsigned int x, unsigned int y, unsigned int colourIndex)
+{
+	unsigned int index = (x + y * W) * 4;
+	sf::Color c = palette[colourIndex];
+//	pixels[index + 0] = c.r;
+//	pixels[index + 1] = c.g;
+//	pixels[index + 2] = c.b;
+	memcpy(pixels + index, &c.r, 3 /* * sizeof(c.r) */);
+	pixels[index + 3] = 255 - colourIndex;
 }

@@ -3,6 +3,12 @@ project(Chthonic_Metal)
 
 set(CMAKE_CXX_STANDARD 23)
 
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
+set(CMAKE_CXX_FLAGS_RELEASE "-Os")
+
 # Find SFML shared libraries
 find_package(SFML 2.5
         COMPONENTS
