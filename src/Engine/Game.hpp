@@ -5,10 +5,11 @@
 #ifndef CHTHONIC_METAL_GAME_HPP
 #define CHTHONIC_METAL_GAME_HPP
 
-#include <vector>
+#include <map>
 #include <chrono>
 
 #include "Scene.hpp"
+#include "Utils.hpp"
 
 namespace Engine
 {
@@ -18,8 +19,9 @@ namespace Engine
 		std::string title;
 
 		sf::RenderWindow window;
-		std::vector<Scene*> scenes;
-		Scene* activeScene;
+		std::map<Utils::SceneName, Scene*> scenes;
+		Scene* currentlyActiveScene;
+		Scene* nextScene;
 
 		std::chrono::time_point<std::chrono::system_clock> frameTimePoint1, frameTimePoint2;
 		float frameTimer = 1.0f;
@@ -31,9 +33,9 @@ namespace Engine
 
 		void run();
 
-		void addScene(Scene* scene);
+		void addScene(Scene* scene, Utils::SceneName sceneName);
 
-		void setActiveScene(Scene* scene);
+		void setActiveScene(Utils::SceneName sceneName);
 
 		uint getFPS() const;
 	};

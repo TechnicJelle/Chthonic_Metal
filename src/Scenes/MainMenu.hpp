@@ -26,7 +26,7 @@ private:
 	sf::Text highscoresText;
 
 public:
-	explicit MainMenu(sf::RenderWindow* window);
+	explicit MainMenu(Engine::Game* game, sf::RenderWindow* window);
 
 	void onActivate() override;
 

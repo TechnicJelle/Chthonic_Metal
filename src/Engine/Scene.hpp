@@ -8,6 +8,11 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "GameObject.hpp"
 
+//Placate the linker
+namespace Engine {
+	class Game;
+}
+
 namespace Engine
 {
 	class Scene

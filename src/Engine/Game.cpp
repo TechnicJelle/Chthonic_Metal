@@ -16,8 +16,9 @@ namespace Engine
 		window.setVerticalSyncEnabled(vsync);
 		*outWindow = &window;
 
-		scenes = std::vector<Scene*>();
-		activeScene = nullptr;
+		scenes = std::map<Utils::SceneName, Scene*>();
+		currentlyActiveScene = nullptr;
+		nextScene = nullptr;
 
 		frameTimePoint1 = std::chrono::system_clock::now();
 
@@ -46,7 +47,15 @@ namespace Engine
 
 			window.clear();
 
-			activeScene->update(fElapsedTime);
+			//If the scene needs to be switched
+			if(nextScene != nullptr)
+			{
+				currentlyActiveScene = nextScene;
+				currentlyActiveScene->onActivate();
+				nextScene = nullptr;
+			}
+
+			currentlyActiveScene->update(fElapsedTime);
 
 			window.display();
 
@@ -63,16 +72,18 @@ namespace Engine
 		}
 	}
 
-	void Game::addScene(Scene* scene)
+	void Game::addScene(Scene* scene, Utils::SceneName sceneName)
 	{
-		scenes.push_back(scene);
+		scenes.emplace(sceneName, scene);
 	}
 
-	void Game::setActiveScene(Scene* scene)
+	///Next frame, switch to this scene
+	void Game::setActiveScene(Utils::SceneName sceneName)
 	{
-		activeScene = scene;
-		printf("Active scene set to %s, at %p\n", typeid(*scene).name(), scene);
-		activeScene->onActivate();
+		if (scenes.contains(sceneName))
+			nextScene = scenes.at(sceneName);
+		else
+			printf("Scene %d not found!\n", sceneName);
 	}
 
 	uint Game::getFPS() const

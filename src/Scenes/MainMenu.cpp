@@ -8,8 +8,9 @@
 #include "MainMenu.hpp"
 #include "../GameObjects/Fire.hpp"
 #include "../Engine/Utils.hpp"
+#include "../Engine/Game.hpp"
 
-MainMenu::MainMenu(sf::RenderWindow* window) : Scene(window)
+MainMenu::MainMenu(Engine::Game* game, sf::RenderWindow* window) : Scene(window)
 {
 	// === Text ===
 	if (!titleFont.loadFromFile("assets/fonts/Another Danger/Another Danger - Demo.otf"))
@@ -55,9 +56,9 @@ MainMenu::MainMenu(sf::RenderWindow* window) : Scene(window)
 			titleFont,
 			sf::Color::White);
 
-	playButton->setOnClick([this]()
+	playButton->setOnClick([game]()
 	{
-		printf("//TODO: Start game\n");
+		game->setActiveScene(Utils::SceneName::CHARACTER_SELECTION);
 	});
 
 	gameObjects.push_back(playButton);

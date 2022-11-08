@@ -3,6 +3,7 @@
 
 #include "Engine/Game.hpp"
 #include "Scenes/MainMenu.hpp"
+#include "Scenes/CharacterSelection.hpp"
 
 int main(int argc, char** argv)
 {
@@ -29,16 +30,17 @@ int main(int argc, char** argv)
 	// Create Scenes
 
 	// >Main Menu
-	MainMenu mainMenu = MainMenu(window);
-	game.addScene(&mainMenu);
+	MainMenu mainMenu = MainMenu(&game, window);
+	game.addScene(&mainMenu, Utils::SceneName::MAIN_MENU);
 
 	// >Character Selection Screen
+	CharacterSelection characterSelectionScreen = CharacterSelection(&game, window);
+	game.addScene(&characterSelectionScreen, Utils::SceneName::CHARACTER_SELECTION);
 
 	// >Fight Screen
 
 	// Start at Main Menu
-	game.setActiveScene(&mainMenu);
-
+	game.setActiveScene(Utils::SceneName::MAIN_MENU);
 	// Run Game
 	game.run();
 

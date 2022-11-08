@@ -10,7 +10,7 @@ namespace Engine
 {
 	Scene::Scene(sf::RenderWindow* window)
 	{
-		printf("Scene created\n");
+		printf("Scene created %p\n", this);
 		this->window = window;
 	}
 

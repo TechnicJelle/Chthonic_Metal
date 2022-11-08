@@ -21,6 +21,11 @@ typedef Csv_t::Row Row_t;
 typedef Csv_t::Cell Cell_t;
 
 namespace Utils {
+	enum SceneName {
+		MAIN_MENU,
+		CHARACTER_SELECTION,
+	};
+
 	inline sf::Color lerpColour(sf::Color& start, sf::Color& end, float percent) {
 		sf::Uint8 r = (sf::Uint8)((float)start.r + (float)(end.r - start.r) * percent);
 		sf::Uint8 g = (sf::Uint8)((float)start.g + (float)(end.g - start.g) * percent);
