@@ -97,10 +97,10 @@ void MainMenu::update(float deltaTime)
 	window->draw(titleText);
 
 	// If Escape Key is pressed, exit the game. Only for the Main Menu!
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	if (window->hasFocus() && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
 		printf("Escape key pressed\n");
-		exit(0);
+		window->close();
 	}
 }
 
