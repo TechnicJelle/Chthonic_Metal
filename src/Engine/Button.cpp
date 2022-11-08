@@ -53,12 +53,15 @@ namespace Engine
 
 	bool Button::isClicked()
 	{
-		if (isHovered() && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		if (!isBeingClicked && isHovered() && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			printf("%s button clicked\n", text.getString().toAnsiString().c_str());
+			isBeingClicked = true;
 			if (callback)
 				callback();
 			return true;
 		}
+		else if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			isBeingClicked = false;
 		return false;
 	}
 }

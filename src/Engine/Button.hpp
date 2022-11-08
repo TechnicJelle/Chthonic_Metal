@@ -18,6 +18,9 @@ namespace Engine
 			sf::Text text;
 			sf::Color defaultColour;
 			sf::Color hoverColour;
+
+			bool isBeingClicked = false;
+
 			using Callback = std::function<void()>;
 			Callback callback;
 
