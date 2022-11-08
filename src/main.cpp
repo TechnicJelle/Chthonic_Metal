@@ -13,7 +13,7 @@ int main(int argc, char** argv)
 	bool vsync = true;
 
 	// Parse Arguments for Settings
-	if(argc > 1) {
+	if (argc > 1) {
 		if (argc > 2) {
 			width = std::stoi(argv[1]);
 			height = std::stoi(argv[2]);
@@ -41,6 +41,7 @@ int main(int argc, char** argv)
 
 	// Start at Main Menu
 	game.setActiveScene(Utils::SceneName::MAIN_MENU);
+
 	// Run Game
 	game.run();
 
