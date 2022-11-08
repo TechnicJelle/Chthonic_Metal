@@ -55,6 +55,11 @@ MainMenu::MainMenu(sf::RenderWindow* window) : Scene(window)
 			titleFont,
 			sf::Color::White);
 
+	playButton->setOnClick([this]()
+	{
+		printf("//TODO: Start game\n");
+	});
+
 	gameObjects.push_back(playButton);
 
 	quitButton = new Engine::Button(
@@ -65,6 +70,10 @@ MainMenu::MainMenu(sf::RenderWindow* window) : Scene(window)
 			"Quit",
 			titleFont,
 			sf::Color::White);
+
+	quitButton->setOnClick([window]() {
+	   window->close();
+	});
 
 	gameObjects.push_back(quitButton);
 }
@@ -85,17 +94,6 @@ void MainMenu::update(float deltaTime)
 	window->draw(highscoresText);
 
 	window->draw(titleText);
-
-	if (playButton->isClicked())
-	{
-		printf("Play button clicked\n");
-	}
-
-	if (quitButton->isClicked())
-	{
-		printf("Quit button clicked\n");
-		exit(0);
-	}
 
 	// If Escape Key is pressed, exit the game. Only for the Main Menu!
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))

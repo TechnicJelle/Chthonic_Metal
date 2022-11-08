@@ -6,26 +6,34 @@
 #define CHTHONIC_METAL_BUTTON_HPP
 
 #include <SFML/Graphics/Text.hpp>
+#include <functional>
 
 #include "GameObject.hpp"
 
 namespace Engine
 {
-class Button : public Engine::GameObject
-	{
+	class Button : public Engine::GameObject
+		{
+		private:
+			sf::Text text;
+			sf::Color defaultColour;
+			sf::Color hoverColour;
+			using Callback = std::function<void()>;
+			Callback callback;
+
+		public:
+			Button(sf::RenderWindow* window, sf::Vector2f position, sf::Vector2f size, sf::Color btnColour, const std::string &btnText, const sf::Font &font, sf::Color textColour);
+
+			void setOnClick(Callback onClickFunction);
+
 	private:
-		sf::Text text;
-		sf::Color defaultColour;
-		sf::Color hoverColour;
+			void update(float deltaTime) override;
 
-	public:
-		Button(sf::RenderWindow* window, sf::Vector2f position, sf::Vector2f size, sf::Color btnColour, const std::string &btnText, const sf::Font &font, sf::Color textColour);
+			void draw() override;
 
-		void draw() override;
+			bool isHovered();
 
-		bool isHovered();
-
-		bool isClicked();
+			bool isClicked();
 	};
 }
 

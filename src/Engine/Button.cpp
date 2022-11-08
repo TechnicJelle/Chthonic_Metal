@@ -24,6 +24,17 @@ namespace Engine
 		text.setPosition(position.x + size.x / 2.0f, position.y + size.y / 2.0f);
 	}
 
+	void Button::setOnClick(Button::Callback onClickFunction)
+	{
+		callback = std::move(onClickFunction);
+	}
+
+	void Button::update(float deltaTime)
+	{
+		GameObject::update(deltaTime);
+		isClicked();
+	}
+
 	void Button::draw()
 	{
 		if (isHovered())
@@ -42,6 +53,12 @@ namespace Engine
 
 	bool Button::isClicked()
 	{
-		return isHovered() && sf::Mouse::isButtonPressed(sf::Mouse::Left);
+		if (isHovered() && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			printf("%s button clicked\n", text.getString().toAnsiString().c_str());
+			if (callback)
+				callback();
+			return true;
+		}
+		return false;
 	}
 }
