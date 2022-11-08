@@ -12,7 +12,6 @@ namespace Engine
 {
 	class GameObject
 	{
-
 	protected:
 		sf::RenderWindow* window;
 
@@ -23,6 +22,10 @@ namespace Engine
 		virtual void update(float deltaTime);
 
 		virtual void draw();
+
+		sf::Vector2f getPosition();
+
+		sf::Vector2f getSize();
 	};
 }
 

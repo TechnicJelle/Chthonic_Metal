@@ -7,6 +7,7 @@
 
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 #include "../Engine/Scene.hpp"
 #include "../Engine/Button.hpp"
@@ -16,14 +17,13 @@ class MainMenu : public Engine::Scene
 private:
 	const std::string highscoresFile = "assets/highscores.cmgt"; //TODO (once highscores saving is implemented): Remove "assets/" from this string
 
-	sf::Font titleFont;
 	sf::Text titleText;
-	Engine::Button* playButton;
-	Engine::Button* quitButton;
-	sf::RectangleShape highscoresPanel;
+
+	Engine::GameObject* highscoresPanel;
 	sf::Text highscoresHeaderText;
-	sf::Font highscoresFont;
 	sf::Text highscoresText;
+
+	sf::Sprite sprClearHighscoresIcon;
 
 public:
 	explicit MainMenu(Engine::Game* game, sf::RenderWindow* window);

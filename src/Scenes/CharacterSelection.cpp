@@ -5,30 +5,21 @@
 #include "CharacterSelection.hpp"
 #include "../Engine/Utils.hpp"
 #include "../Engine/Game.hpp"
+#include "../AssetManager.hpp"
 
 CharacterSelection::CharacterSelection(Engine::Game* game, sf::RenderWindow* window) : Scene(window)
 {
-	if (!bigFont.loadFromFile("assets/fonts/Another Danger/Another Danger - Demo.otf"))
-	{
-		throw std::runtime_error("Could not load bigFont");
-	}
+	text = sf::Text("Character Selection", Asset.fontAnotherDanger, window->getSize().y / 15);
+	CENTER_ORIGIN(text);
+	text.setPosition((float)window->getSize().x / 2.0f, (float)window->getSize().y * 0.1f);
 
-	if (!smallFont.loadFromFile("assets/fonts/Teko/Teko-Medium.ttf"))
-	{
-		throw std::runtime_error("Could not load smallFont");
-	}
-
-	text = sf::Text("Character Selection", bigFont, window->getSize().y / 15);
-	text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
-	text.setPosition((float)window->getSize().x / 2.0f, (float)window->getSize().y * 0.2f);
-
-	btnBack = new Engine::Button(
+	Engine::Button* btnBack = new Engine::Button(
 			window,
 			sf::Vector2f((float)window->getSize().x * 0.005f, (float)window->getSize().y * 0.01f),
 			sf::Vector2f((float)window->getSize().x * 0.1f, (float)window->getSize().y * 0.1f),
 			sf::Color::Magenta,
 			"Back",
-			smallFont,
+			Asset.fontTeko,
 			sf::Color::White);
 
 	btnBack->setOnClick([game]()
@@ -37,6 +28,36 @@ CharacterSelection::CharacterSelection(Engine::Game* game, sf::RenderWindow* win
 	});
 
 	gameObjects.push_back(btnBack);
+
+	sprBackground.setTexture(Asset.txBackground);
+
+	sprBackground.setScale(
+			(float)window->getSize().x / sprBackground.getLocalBounds().width,
+			(float)window->getSize().y / sprBackground.getLocalBounds().height);
+
+	sprBackground.setPosition(0, 0);
+
+	float height = (float)window->getSize().y * 0.4f;
+	sprPookman_Chorizo.setTexture(Asset.txPookman_Chorizo);
+	CENTER_ORIGIN(sprPookman_Chorizo);
+	sprPookman_Chorizo.setScale(getSpriteScale(sprPookman_Chorizo));
+	sprPookman_Chorizo.setPosition((float)window->getSize().x / 4.0f * 1.0f, height);
+
+	sprPookman_Pukechoo.setTexture(Asset.txPookman_Pukechoo);
+	CENTER_ORIGIN(sprPookman_Pukechoo);
+	sprPookman_Pukechoo.setScale(getSpriteScale(sprPookman_Pukechoo));
+	sprPookman_Pukechoo.setPosition((float)window->getSize().x / 4.0f * 2.0f, height);
+
+	sprPookman_Scoot.setTexture(Asset.txPookman_Scoot);
+	CENTER_ORIGIN(sprPookman_Scoot);
+	sprPookman_Scoot.setScale(getSpriteScale(sprPookman_Scoot));
+	sprPookman_Scoot.setPosition((float)window->getSize().x / 4.0f * 3.0f, height);
+}
+
+sf::Vector2f CharacterSelection::getSpriteScale(sf::Sprite& sprite)
+{
+	float scale = (float)window->getSize().x / sprite.getLocalBounds().width * 0.25f;
+	return { scale, scale };
 }
 
 void CharacterSelection::onActivate()
@@ -46,6 +67,13 @@ void CharacterSelection::onActivate()
 
 void CharacterSelection::update(float deltaTime)
 {
+	window->draw(sprBackground);
+
 	Scene::update(deltaTime);
+
 	window->draw(text);
+
+	window->draw(sprPookman_Chorizo);
+	window->draw(sprPookman_Pukechoo);
+	window->draw(sprPookman_Scoot);
 }

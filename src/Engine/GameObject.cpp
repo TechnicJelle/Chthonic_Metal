@@ -23,4 +23,14 @@ namespace Engine
 	{
 		window->draw(rect);
 	}
+
+	sf::Vector2f GameObject::getPosition()
+	{
+		return rect.getPosition();
+	}
+
+	sf::Vector2f GameObject::getSize()
+	{
+		return rect.getSize();
+	}
 }

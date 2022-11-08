@@ -8,6 +8,11 @@
 #include <SFML/Graphics/Color.hpp>
 #include "../../include/csv2/csv2.hpp"
 
+#define CENTER_ORIGIN(object) \
+	object.setOrigin( \
+		(object).getLocalBounds().width / 2.0f, \
+		(object).getLocalBounds().height / 2.0f)
+
 typedef csv2::Reader<
 			csv2::delimiter<','>,
 			csv2::quote_character<'"'>,
