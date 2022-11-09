@@ -12,7 +12,7 @@ namespace Engine
 	Game::Game(int width, int height, std::string title, bool vsync, sf::RenderWindow** outWindow)
 	{
 		this->title = std::move(title);
-		window.create(sf::VideoMode(width, height), this->title);
+		window.create(sf::VideoMode(width, height), this->title, sf::Style::Titlebar | sf::Style::Close);
 		window.setVerticalSyncEnabled(vsync);
 		*outWindow = &window;
 
