@@ -10,7 +10,7 @@
 CharacterSelection::CharacterSelection(Engine::Game* game, sf::RenderWindow* window) : Scene(window)
 {
 	text = sf::Text("Character Selection", Asset.fontAnotherDanger, window->getSize().y / 15);
-	CENTER_ORIGIN(text);
+	Utils::centerOrigin(text);
 	text.setPosition((float)window->getSize().x / 2.0f, (float)window->getSize().y * 0.1f);
 
 	Engine::Button* btnBack = new Engine::Button(
@@ -39,17 +39,17 @@ CharacterSelection::CharacterSelection(Engine::Game* game, sf::RenderWindow* win
 
 	float height = (float)window->getSize().y * 0.4f;
 	sprPookman_Chorizo.setTexture(Asset.txPookman_Chorizo);
-	CENTER_ORIGIN(sprPookman_Chorizo);
+	Utils::centerOrigin(sprPookman_Chorizo);
 	sprPookman_Chorizo.setScale(getSpriteScale(sprPookman_Chorizo));
 	sprPookman_Chorizo.setPosition((float)window->getSize().x / 4.0f * 1.0f, height);
 
 	sprPookman_Pukechoo.setTexture(Asset.txPookman_Pukechoo);
-	CENTER_ORIGIN(sprPookman_Pukechoo);
+	Utils::centerOrigin(sprPookman_Pukechoo);
 	sprPookman_Pukechoo.setScale(getSpriteScale(sprPookman_Pukechoo));
 	sprPookman_Pukechoo.setPosition((float)window->getSize().x / 4.0f * 2.0f, height);
 
 	sprPookman_Scoot.setTexture(Asset.txPookman_Scoot);
-	CENTER_ORIGIN(sprPookman_Scoot);
+	Utils::centerOrigin(sprPookman_Scoot);
 	sprPookman_Scoot.setScale(getSpriteScale(sprPookman_Scoot));
 	sprPookman_Scoot.setPosition((float)window->getSize().x / 4.0f * 3.0f, height);
 }

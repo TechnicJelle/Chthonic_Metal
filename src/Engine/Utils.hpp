@@ -8,10 +8,6 @@
 #include <SFML/Graphics/Color.hpp>
 #include "../../include/csv2/csv2.hpp"
 
-#define CENTER_ORIGIN(object) \
-	object.setOrigin( \
-		(object).getLocalBounds().width / 2.0f, \
-		(object).getLocalBounds().height / 2.0f)
 
 typedef csv2::Reader<
 			csv2::delimiter<','>,
@@ -30,6 +26,14 @@ namespace Utils {
 		MAIN_MENU,
 		CHARACTER_SELECTION,
 	};
+
+	template<class T>
+	void centerOrigin(T& object)
+	{
+		object.setOrigin(
+				object.getLocalBounds().width / 2.0f,
+				object.getLocalBounds().height / 2.0f);
+	}
 
 	inline sf::Color lerpColour(sf::Color& start, sf::Color& end, float percent) {
 		sf::Uint8 r = (sf::Uint8)((float)start.r + (float)(end.r - start.r) * percent);

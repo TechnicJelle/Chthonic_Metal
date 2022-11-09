@@ -15,7 +15,7 @@ MainMenu::MainMenu(Engine::Game* game, sf::RenderWindow* window) : Scene(window)
 {
 	// === Text ===
 	titleText = sf::Text("Chthonic Metal", Asset.fontAnotherDanger, window->getSize().y / 5);
-	CENTER_ORIGIN(titleText);
+	Utils::centerOrigin(titleText);
 	titleText.setPosition((float)window->getSize().x / 2.0f, (float)window->getSize().y * 0.2f);
 
 
@@ -56,7 +56,7 @@ MainMenu::MainMenu(Engine::Game* game, sf::RenderWindow* window) : Scene(window)
 	});
 
 	sprClearHighscoresIcon = sf::Sprite(Asset.txMaterialIcon_DeleteSweep);
-	CENTER_ORIGIN(sprClearHighscoresIcon);
+	Utils::centerOrigin(sprClearHighscoresIcon);
 	sprClearHighscoresIcon.setPosition(
 			btnClearHighscores->getPosition().x + btnClearHighscores->getSize().x * 0.5f,
 			btnClearHighscores->getPosition().y + btnClearHighscores->getSize().y * 0.5f);
@@ -169,7 +169,7 @@ void MainMenu::loadHighscores()
 	}
 
 	//position in middle of panel:
-	CENTER_ORIGIN(highscoresText);
+	Utils::centerOrigin(highscoresText);
 	highscoresText.setPosition(
 			highscoresPanel->getPosition().x + highscoresPanel->getSize().x * 0.48f,
 			highscoresPanel->getPosition().y + (highscoresPanel->getSize().y - highscoresHeaderText.getLocalBounds().height / 2) / 2);
