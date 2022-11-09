@@ -26,7 +26,7 @@ private:
 	sf::Sprite sprClearHighscoresIcon;
 
 public:
-	explicit MainMenu(Engine::Game* game, sf::RenderWindow* window);
+	MainMenu(Engine::Game* game, sf::RenderWindow* window);
 
 	void onActivate() override;
 

@@ -8,9 +8,9 @@
 
 namespace Engine
 {
-	Scene::Scene(sf::RenderWindow* window)
+	Scene::Scene(Engine::Game* game, sf::RenderWindow* window)
 	{
-		printf("Scene created %p\n", this);
+		printf("Scene created %p as a part of %p\n", this, game);
 		this->window = window;
 	}
 

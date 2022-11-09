@@ -78,12 +78,14 @@ namespace Engine
 	}
 
 	///Next frame, switch to this scene
-	void Game::setActiveScene(Utils::SceneName sceneName)
+	Scene* Game::setActiveScene(Utils::SceneName sceneName)
 	{
 		if (scenes.contains(sceneName))
 			nextScene = scenes.at(sceneName);
 		else
 			printf("Scene %d not found!\n", sceneName);
+
+		return nextScene;
 	}
 
 	uint Game::getFPS() const

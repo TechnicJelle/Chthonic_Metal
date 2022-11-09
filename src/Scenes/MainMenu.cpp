@@ -11,7 +11,7 @@
 #include "../Engine/Game.hpp"
 #include "../AssetManager.hpp"
 
-MainMenu::MainMenu(Engine::Game* game, sf::RenderWindow* window) : Scene(window)
+MainMenu::MainMenu(Engine::Game* game, sf::RenderWindow* window) : Scene(game, window)
 {
 	// === Text ===
 	titleText = sf::Text("Chthonic Metal", Asset.fontAnotherDanger, window->getSize().y / 5);

@@ -35,7 +35,7 @@ namespace Engine
 
 		void addScene(Scene* scene, Utils::SceneName sceneName);
 
-		void setActiveScene(Utils::SceneName sceneName);
+		Scene* setActiveScene(Utils::SceneName sceneName);
 
 		uint getFPS() const;
 	};

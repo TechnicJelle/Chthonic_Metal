@@ -26,7 +26,7 @@ namespace Engine
 		void drawGameObjects();
 
 	protected:
-		explicit Scene(sf::RenderWindow* window);
+		Scene(Engine::Game* game, sf::RenderWindow* window);
 
 	public:
 		virtual void onActivate();

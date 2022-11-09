@@ -25,6 +25,7 @@ namespace Utils {
 	enum SceneName {
 		MAIN_MENU,
 		CHARACTER_SELECTION,
+		FIGHT,
 	};
 
 	template<class T>

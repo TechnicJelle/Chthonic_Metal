@@ -26,7 +26,7 @@ private:
 	sf::Vector2f getSpriteScale(sf::Sprite &sprite);
 
 public:
-	explicit CharacterSelection(Engine::Game* game, sf::RenderWindow* window);
+	CharacterSelection(Engine::Game* game, sf::RenderWindow* window);
 
 	void onActivate() override;
 

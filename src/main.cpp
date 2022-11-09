@@ -1,9 +1,9 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
 #include "Engine/Game.hpp"
 #include "Scenes/MainMenu.hpp"
 #include "Scenes/CharacterSelection.hpp"
+#include "Scenes/Fight.hpp"
 
 int main(int argc, char** argv)
 {
@@ -38,6 +38,8 @@ int main(int argc, char** argv)
 	game.addScene(&characterSelectionScreen, Utils::SceneName::CHARACTER_SELECTION);
 
 	// >Fight Screen
+	Fight fightScreen = Fight(&game, window);
+	game.addScene(&fightScreen, Utils::SceneName::FIGHT);
 
 	// Start at Main Menu
 	game.setActiveScene(Utils::SceneName::MAIN_MENU);
