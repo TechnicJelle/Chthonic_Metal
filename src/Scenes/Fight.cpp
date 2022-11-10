@@ -39,7 +39,7 @@ Fight::Fight(Engine::Game* game, sf::RenderWindow* window) : Scene(game, window)
 		}
 	});
 
-	// > Speed Up
+	// > Gamble Attack
 	btnGambleAttack = new Engine::Button(window,
 										 sf::Vector2f((float)window->getSize().x * 0.75f, (float)window->getSize().y * 0.8f),
 										 sf::Vector2f((float)window->getSize().x * 0.25f, (float)window->getSize().y * 0.1f),

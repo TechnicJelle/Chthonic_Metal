@@ -64,7 +64,7 @@ MainMenu::MainMenu(Engine::Game* game, sf::RenderWindow* window) : Scene(game, w
 	// === GameObjects ===
 	Fire* fire = new Fire(window);
 
-	Engine::Button* playButton = new Engine::Button(
+	Engine::Button* btnPlay = new Engine::Button(
 			window,
 			sf::Vector2f((float)window->getSize().x * 0.2f, (float)window->getSize().y * 0.4f),
 			sf::Vector2f((float)window->getSize().x * 0.26f, (float)window->getSize().y * 0.18f),
@@ -73,11 +73,11 @@ MainMenu::MainMenu(Engine::Game* game, sf::RenderWindow* window) : Scene(game, w
 			Asset.fontAnotherDanger,
 			sf::Color::White);
 
-	playButton->setOnClick([game]()	{
+	btnPlay->setOnClick([game]()	{
 		game->setActiveScene(Utils::SceneName::CHARACTER_SELECTION);
 	});
 
-	Engine::Button* quitButton = new Engine::Button(
+	Engine::Button* btnQuit = new Engine::Button(
 			window,
 			sf::Vector2f((float)window->getSize().x * 0.3f, (float)window->getSize().y * 0.6f),
 			sf::Vector2f((float)window->getSize().x * 0.16f, (float)window->getSize().y * 0.12f),
@@ -86,13 +86,13 @@ MainMenu::MainMenu(Engine::Game* game, sf::RenderWindow* window) : Scene(game, w
 			Asset.fontAnotherDanger,
 			sf::Color::White);
 
-	quitButton->setOnClick([window]() {
+	btnQuit->setOnClick([window]() {
 	   window->close();
 	});
 
 	gameObjects.push_back(fire);
-	gameObjects.push_back(playButton);
-	gameObjects.push_back(quitButton);
+	gameObjects.push_back(btnPlay);
+	gameObjects.push_back(btnQuit);
 	gameObjects.push_back(highscoresPanel);
 	gameObjects.push_back(btnClearHighscores);
 }
