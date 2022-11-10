@@ -1,0 +1,35 @@
+//
+// Created by technicjelle on 10/11/22.
+//
+
+#ifndef CHTHONIC_METAL_ENEMY_HPP
+#define CHTHONIC_METAL_ENEMY_HPP
+
+
+#include "Character.hpp"
+
+class Enemy : public Character
+{
+public:
+	const std::string str_enemyAttacked = "Enemy attacked!";
+	const std::string str_enemyGambled = "Enemy gambled and did %d damage!";
+	const std::string str_enemyHealed = "Enemy healed!";
+	const std::string str_enemyRested = "Enemy rested!";
+	const std::string str_enemyDidNothing = "Enemy did nothing..?";
+
+public:
+	Enemy(sf::RenderWindow* window, sf::Vector2f position, sf::Vector2f size,
+		  std::string name, sf::Texture& texture,
+		  int startHealth, int startStamina, int attack);
+
+	static Enemy* createRandomEnemy(sf::RenderWindow* window, sf::Vector2f position, sf::Vector2f size);
+
+	/// Returns string of what the enemy did
+	std::string doARandomMove(Character* player);
+
+	// Moves
+	void doNothing();
+};
+
+
+#endif //CHTHONIC_METAL_ENEMY_HPP

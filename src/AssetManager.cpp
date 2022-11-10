@@ -3,6 +3,7 @@
 //
 
 #include "AssetManager.hpp"
+#include "Engine/Random.hpp"
 
 AssetManager::AssetManager()
 {
@@ -16,4 +17,20 @@ AssetManager::AssetManager()
 	if (!txPookman_Scoot.loadFromFile("assets/pookmans/scoot.png")) throw std::runtime_error("Could not load txPookman_Scoot");
 
 	if (!txMaterialIcon_DeleteSweep.loadFromFile("assets/material-icons/delete-sweep-outline-black.png")) throw std::runtime_error("Could not load txMaterialIcon_DeleteSweep");
+}
+
+sf::Texture &AssetManager::getRandomPookmanTexture()
+{
+	int random = Random::randi(3);
+	switch (random)
+	{
+		case 0:
+			return txPookman_Chorizo;
+		case 1:
+			return txPookman_Pukechoo;
+		case 2:
+			return txPookman_Scoot;
+		default:
+			throw std::runtime_error("Could not get random pookman texture");
+	}
 }

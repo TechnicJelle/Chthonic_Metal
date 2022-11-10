@@ -25,7 +25,8 @@ namespace Engine
 			Callback callback;
 
 		public:
-			Button(sf::RenderWindow* window, sf::Vector2f position, sf::Vector2f size, sf::Color btnColour, const std::string &btnText, const sf::Font &font, sf::Color textColour);
+			Button(sf::RenderWindow* window, sf::Vector2f position, sf::Vector2f size, sf::Color btnColour,
+				   const std::string &btnText, const sf::Font &font, sf::Color textColour);
 
 			void setOnClick(Callback onClickFunction);
 

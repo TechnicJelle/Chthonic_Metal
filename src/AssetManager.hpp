@@ -31,6 +31,8 @@ public:
 		static AssetManager instance;
 		return instance;
 	}
+
+	sf::Texture& getRandomPookmanTexture();
 };
 
 
