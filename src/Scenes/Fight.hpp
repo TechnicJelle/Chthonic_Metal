@@ -32,6 +32,14 @@ private:
 	Engine::Button* btnHeal;
 	Engine::Button* btnRest;
 
+	Engine::Button* btnBackToMenu;
+
+	int score = 0;
+
+	bool gameOver = false;
+
+	void saveHighscores();
+
 public:
 	void receiveCharacterSelection(sf::Texture& txPlayer, const std::string& name);
 
@@ -41,8 +49,6 @@ public:
 	void onActivate() override;
 
 	void update(float deltaTime) override;
-
-	void createRandomEnemy();
 };
 
 

@@ -19,16 +19,16 @@ public:
 
 public:
 	Enemy(sf::RenderWindow* window, sf::Vector2f position, sf::Vector2f size,
-		  std::string name, sf::Texture& texture,
+		  std::string name, sf::Texture* texture,
 		  int startHealth, int startStamina, int attack);
-
-	static Enemy* createRandomEnemy(sf::RenderWindow* window, sf::Vector2f position, sf::Vector2f size);
 
 	/// Returns string of what the enemy did
 	std::string doARandomMove(Character* player);
 
 	// Moves
 	void doNothing();
+
+	void reincarnate();
 };
 
 

@@ -13,8 +13,11 @@ AssetManager::AssetManager()
 	if (!txBackground.loadFromFile("assets/background.png")) throw std::runtime_error("Could not load txBackground");
 
 	if (!txPookman_Chorizo.loadFromFile("assets/pookmans/chorizo.png")) throw std::runtime_error("Could not load txPookman_Chorizo");
+	printf("txPookman_Chorizo location: %p\n", &txPookman_Chorizo);
 	if (!txPookman_Pukechoo.loadFromFile("assets/pookmans/pukechoo.png")) throw std::runtime_error("Could not load txPookman_Pukechoo");
+	printf("txPookman_Pukechoo location: %p\n", &txPookman_Pukechoo);
 	if (!txPookman_Scoot.loadFromFile("assets/pookmans/scoot.png")) throw std::runtime_error("Could not load txPookman_Scoot");
+	printf("txPookman_Scoot location: %p\n", &txPookman_Scoot);
 
 	if (!txMaterialIcon_DeleteSweep.loadFromFile("assets/material-icons/delete-sweep-outline-black.png")) throw std::runtime_error("Could not load txMaterialIcon_DeleteSweep");
 }

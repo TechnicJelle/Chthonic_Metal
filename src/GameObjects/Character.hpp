@@ -14,9 +14,9 @@
 
 class Character : public Engine::GameObject
 {
-private:
+protected:
 	std::string name;
-	sf::Texture& texture;
+	sf::Texture* texture;
 	sf::Sprite sprite;
 
 	sf::Text textName;
@@ -33,23 +33,26 @@ private:
 
 	bool isDead = false;
 
+	void updateText();
+
 private:
 	void increaseStamina();
 
 	void decreaseStamina();
 
-	void updateText();
-
 public:
 	Character(sf::RenderWindow* window, sf::Vector2f position, sf::Vector2f size,
-			  std::string name, sf::Texture& texture,
+			  std::string name, sf::Texture* texture,
 			  int startHealth, int startStamina, int attack);
 
 	void draw() override;
 
 	void takeDamage(int amount);
 
+	/// Returns true if character has enough stamina to attack
 	bool checkStamina() const;
+
+	bool checkDead() const;
 
 	// Moves
 	/// Returns true if the target is dead

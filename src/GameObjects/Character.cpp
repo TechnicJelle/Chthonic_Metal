@@ -9,7 +9,7 @@
 #include <utility>
 
 Character::Character(sf::RenderWindow* window, sf::Vector2f position, sf::Vector2f size,
-					 std::string name, sf::Texture &texture,
+					 std::string name, sf::Texture* texture,
 					 int startHealth, int startStamina, int attack) :
 	GameObject(window, position, size, sf::Color(255, 255, 255, 10)),
 	name(std::move(name)), texture(texture),
@@ -17,7 +17,7 @@ Character::Character(sf::RenderWindow* window, sf::Vector2f position, sf::Vector
 		startStamina(startStamina), currentStamina(startStamina),
 		attack(attack)
 {
-	sprite.setTexture(this->texture);
+	sprite.setTexture(*this->texture);
 	sprite.setPosition(position);
 	sprite.setScale(size.x / sprite.getGlobalBounds().width, size.y / sprite.getGlobalBounds().height);
 
@@ -72,11 +72,14 @@ void Character::takeDamage(int amount)
 	}
 }
 
-
-/// Returns true if character has enough stamina to attack
 bool Character::checkStamina() const
 {
 	return currentStamina >= 2;
+}
+
+bool Character::checkDead() const
+{
+	return isDead;
 }
 
 // Moves
@@ -91,9 +94,8 @@ bool Character::attackCharacter(Character* target, int amount)
 		decreaseStamina();
 	}
 	afterMove();
-	if (target->isDead)
-		return true;
-	return false;
+
+	return target->isDead;
 }
 
 std::pair<bool, int> Character::gambleAttack(Character* target)

@@ -11,18 +11,12 @@
 
 
 Enemy::Enemy(sf::RenderWindow* window, sf::Vector2f position, sf::Vector2f size,
-			   std::string name, sf::Texture &texture,
+			   std::string name, sf::Texture* texture,
 			   int startHealth, int startStamina, int attack) :
 		Character(window, position, size,
 				  std::move(name), texture, startHealth, startStamina, attack)
 {
 
-}
-
-Enemy* Enemy::createRandomEnemy(sf::RenderWindow* window, sf::Vector2f position, sf::Vector2f size)
-{
-	return new Enemy(window, position, size, "Enemy", Asset.getRandomPookmanTexture(),
-					 100, 10, 10);
 }
 
 void Enemy::doNothing()
@@ -53,4 +47,18 @@ std::string Enemy::doARandomMove(Character* player)
 			return str_enemyDidNothing;
 	}
 	throw std::runtime_error("Random number generator returned a number that is not in the range of 0-4");
+}
+
+void Enemy::reincarnate()
+{
+	texture = &Asset.getRandomPookmanTexture();
+	printf("Enemy reincarnated into a %p\n", texture);
+	sprite.setTexture(*texture);
+
+	currentHealth = startHealth;
+	currentStamina = startStamina;
+
+	isDead = false;
+
+	updateText();
 }

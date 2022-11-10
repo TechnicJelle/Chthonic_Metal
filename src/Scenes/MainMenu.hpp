@@ -15,8 +15,6 @@
 class MainMenu : public Engine::Scene
 {
 private:
-	const std::string highscoresFile = "assets/highscores.cmgt"; //TODO (once highscores saving is implemented): Remove "assets/" from this string
-
 	sf::Text titleText;
 
 	Engine::GameObject* highscoresPanel;

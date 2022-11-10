@@ -2,8 +2,12 @@
 // Created by technicjelle on 10/11/22.
 //
 
+#include <filesystem>
 #include "Fight.hpp"
 #include "../AssetManager.hpp"
+#include "../Engine/Utils.hpp"
+#include "../Engine/Random.hpp"
+#include "../Engine/Game.hpp"
 
 Fight::Fight(Engine::Game* game, sf::RenderWindow* window) : Scene(game, window)
 {
@@ -28,7 +32,6 @@ Fight::Fight(Engine::Game* game, sf::RenderWindow* window) : Scene(game, window)
 			if (player->attackCharacter(enemy))
 			{
 				textArea.setString(str_enemyDied);
-				enemy = nullptr;
 			}
 			else
 				textArea.setString(enemy->doARandomMove(player));
@@ -56,7 +59,6 @@ Fight::Fight(Engine::Game* game, sf::RenderWindow* window) : Scene(game, window)
 		{
 			if (player->gambleAttack(enemy).first) {
 				textArea.setString(str_enemyDied);
-				enemy = nullptr;
 			}
 			else
 				textArea.setString(enemy->doARandomMove(player));
@@ -110,20 +112,42 @@ Fight::Fight(Engine::Game* game, sf::RenderWindow* window) : Scene(game, window)
 	// === Character Size ===
 	float sprHeight = (float)window->getSize().y * 0.4f;
 	characterSize = sf::Vector2f(sprHeight, sprHeight);
+
+	// === Back To Menu Button ===
+	btnBackToMenu = new Engine::Button(window,
+									   sf::Vector2f((float)window->getSize().x * 0.005f, (float)window->getSize().y * 0.01f),
+									   sf::Vector2f((float)window->getSize().x * 0.1f, (float)window->getSize().y * 0.1f),
+									   sf::Color::Magenta,
+									   "Quit",
+									   Asset.fontTeko,
+									   sf::Color::White);
+
+	btnBackToMenu->setOnClick([game]()
+	{
+	  	game->setActiveScene(Utils::SceneName::MAIN_MENU);
+	});
+
+	gameObjects.push_back(btnBackToMenu);
 }
 
 void Fight::receiveCharacterSelection(sf::Texture& txPlayer, const std::string& name)
 {
 	printf("Received character selection: %s\n", name.c_str());
 
+	float height = (float)window->getSize().y * 0.2f;
 	player = new Player(window,
-						sf::Vector2f((float)window->getSize().x * 0.05f, (float)window->getSize().y * 0.1f),
-						characterSize, name, txPlayer,
+						sf::Vector2f((float)window->getSize().x * 0.05f, height),
+						characterSize, name, &txPlayer,
 						100, 10, 10);
 
 	gameObjects.push_back(player);
 
-	createRandomEnemy();
+	enemy = new Enemy(window,
+					  sf::Vector2f((float)window->getSize().x * 0.95f - characterSize.x, height),
+					  characterSize, "Enemy", &Asset.getRandomPookmanTexture(),
+					  100, 10, 10);
+
+	gameObjects.push_back(enemy);
 
 	textArea.setString(str_waitingForPlayerMove);
 }
@@ -135,24 +159,97 @@ void Fight::onActivate()
 
 void Fight::update(float deltaTime)
 {
-	Scene::update(deltaTime);
 	if(player == nullptr) return; // Wait for character selection to be received
-	if(enemy == nullptr) {
+	if(enemy->checkDead()) {
 		printf("Enemy died\n");
-		gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), enemy), gameObjects.end());
-		createRandomEnemy();
-		return; // Wait for enemy to be created
+		enemy->reincarnate();
+		score++;
 	}
+	Scene::update(deltaTime);
 
 	window->draw(textArea);
+
+	if(player->checkDead() && !gameOver) {
+		printf("Player died\n");
+		gameOver = true;
+		//remove buttons from gameObjects
+		gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), btnAttack), gameObjects.end());
+		gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), btnGambleAttack), gameObjects.end());
+		gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), btnHeal), gameObjects.end());
+		gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), btnRest), gameObjects.end());
+
+		textArea.setString("You died! Your score was " + std::to_string(score));
+		saveHighscores();
+	}
 }
 
-void Fight::createRandomEnemy()
+
+void Fight::saveHighscores()
 {
-	enemy = Enemy::createRandomEnemy(window,
-									 sf::Vector2f((float)window->getSize().x * 0.95f - characterSize.x, (float)window->getSize().y * 0.1f),
-									 characterSize);
+	Csv_t csv;
 
-	gameObjects.push_back(enemy);
+	std::vector<std::vector<std::string>> outRows;
 
+	if (std::filesystem::exists(Utils::highscoresFile))
+	{
+		if (!csv.mmap(Utils::highscoresFile))
+		{
+			printf("Error loading in the highscores file to save a new highscore\n");
+		}
+		else
+		{
+			//load csv into outRows vector
+			for (const Row_t row : csv)
+			{
+				std::vector<std::string> rowVec;
+				for (const Cell_t cell : row)
+				{
+					std::string value;
+					cell.read_value(value);
+					rowVec.push_back(value);
+				}
+				outRows.push_back(rowVec);
+			}
+		}
+	}
+
+	//remove all rows with less than 3 columns
+	outRows.erase(std::remove_if(outRows.begin(), outRows.end(),
+								 [](const std::vector<std::string>& row) { return row.size() < 3; }),
+				  outRows.end());
+
+	{
+		//add new highscore to the outRows
+		time_t t = std::time(nullptr);
+		tm tm = *std::localtime(&t);
+
+		std::ostringstream oss;
+		oss << std::put_time(&tm, "%Y-%m-%d %H-%M");
+
+		std::vector<std::string> newRow = {
+				oss.str(),
+				player->getName(),
+				std::to_string(score)
+		};
+
+		outRows.push_back(newRow);
+	}
+
+	//sort outRows by score
+	std::sort(outRows.begin(), outRows.end(), [](const std::vector<std::string>& a, const std::vector<std::string>& b) {
+		return std::stoi(a[2]) > std::stoi(b[2]);
+	});
+
+	//keep only the top scores
+	int maxScores = 5;
+	if (outRows.size() > maxScores) {
+		outRows.erase(outRows.begin() + maxScores, outRows.end());
+	}
+
+	//write outRows to csv
+	std::ofstream stream(Utils::highscoresFile);
+	csv2::Writer<csv2::delimiter<','>> writer(stream);
+
+	writer.write_rows(outRows);
+	stream.close();
 }

@@ -33,9 +33,6 @@ MainMenu::MainMenu(Engine::Game* game, sf::RenderWindow* window) : Scene(game, w
 	highscoresHeaderText.setFillColor(sf::Color::Black);
 
 	highscoresText = sf::Text("Loading highscores...", Asset.fontTeko, window->getSize().y / 20);
-	highscoresText.setPosition(
-			highscoresPanel->getPosition().x + highscoresPanel->getSize().x * 0.05f,
-			highscoresPanel->getPosition().y + highscoresPanel->getSize().y * 0.2f);
 	highscoresText.setFillColor(sf::Color::Black);
 
 	float btnClearHighscoresSize = (float)window->getSize().y / 12.0f;
@@ -51,7 +48,7 @@ MainMenu::MainMenu(Engine::Game* game, sf::RenderWindow* window) : Scene(game, w
 			sf::Color::White);
 
 	btnClearHighscores->setOnClick([this]() {
-		std::filesystem::remove(highscoresFile);
+		std::filesystem::remove(Utils::highscoresFile);
 		loadHighscores();
 	});
 
@@ -104,6 +101,11 @@ void MainMenu::onActivate()
 {
 	Scene::onActivate();
 
+	highscoresText.setOrigin(0, 0);
+	highscoresText.setPosition(
+			highscoresPanel->getPosition().x + highscoresPanel->getSize().x * 0.05f,
+			highscoresPanel->getPosition().y + highscoresPanel->getSize().y * 0.2f);
+
 	loadHighscores();
 }
 
@@ -130,24 +132,15 @@ void MainMenu::loadHighscores()
 {
 	Csv_t csv;
 
-	if (std::filesystem::exists(highscoresFile))
+	if (std::filesystem::exists(Utils::highscoresFile))
 	{
-		if (!csv.mmap(highscoresFile))
+		if (!csv.mmap(Utils::highscoresFile))
 		{
 			highscoresText.setString("Error loading in the highscores");
 		}
 		else
 		{
 			std::string highscoresString;
-			/*const Row_t header = csv.header();
-
-			for (const Cell_t cell : header)
-			{
-				std::string value;
-				cell.read_value(value);
-				highscoresString += value + " ";
-			}
-			highscoresString += "\n";*/
 
 			for (const Row_t row : csv)
 			{
