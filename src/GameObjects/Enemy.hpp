@@ -11,11 +11,11 @@
 class Enemy : public Character
 {
 public:
-	const std::string str_enemyAttacked = "Enemy attacked!";
-	const std::string str_enemyGambled = "Enemy gambled and did %d damage!";
-	const std::string str_enemyHealed = "Enemy healed!";
-	const std::string str_enemyRested = "Enemy rested!";
-	const std::string str_enemyDidNothing = "Enemy did nothing..?";
+	std::string str_enemyAttacked = "Enemy attacked!";
+	std::string str_enemyGambled = "Enemy gambled and did %d damage!";
+	std::string str_enemyHealed = "Enemy healed!";
+	std::string str_enemyRested = "Enemy rested!";
+	std::string str_enemyDidNothing = "Enemy did nothing..?";
 
 public:
 	Enemy(sf::RenderWindow* window, sf::Vector2f position, sf::Vector2f size,

@@ -9,6 +9,7 @@ AssetManager::AssetManager()
 {
 	if (!fontAnotherDanger.loadFromFile("assets/fonts/Another Danger/Another Danger - Demo.otf")) throw std::runtime_error("Could not load fontAnotherDanger");
 	if (!fontTeko.loadFromFile("assets/fonts/Teko/Teko-Medium.ttf")) throw std::runtime_error("Could not load fontTeko");
+	if (!fontReggaeOne.loadFromFile("assets/fonts/Reggae One/ReggaeOne-Regular.ttf")) throw std::runtime_error("Could not load fontReggaeOne");
 
 	if (!txBackground.loadFromFile("assets/background.png")) throw std::runtime_error("Could not load txBackground");
 

@@ -14,6 +14,7 @@ class AssetManager
 public:
 	sf::Font fontAnotherDanger;
 	sf::Font fontTeko;
+	sf::Font fontReggaeOne;
 
 	sf::Texture txBackground;
 

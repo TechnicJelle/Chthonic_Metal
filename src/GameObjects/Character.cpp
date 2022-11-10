@@ -17,6 +17,7 @@ Character::Character(sf::RenderWindow* window, sf::Vector2f position, sf::Vector
 		startStamina(startStamina), currentStamina(startStamina),
 		attack(attack)
 {
+	if(window == nullptr) return;
 	sprite.setTexture(*this->texture);
 	sprite.setPosition(position);
 	sprite.setScale(size.x / sprite.getGlobalBounds().width, size.y / sprite.getGlobalBounds().height);
