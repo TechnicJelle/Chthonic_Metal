@@ -1,5 +1,6 @@
 # Chthonic_Metal
 A game in SFML, made for my school's C++ course.
+#### Final grade: 9.5/10 :D
 
 ## Source code:
 Right here :D
