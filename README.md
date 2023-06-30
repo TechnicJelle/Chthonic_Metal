@@ -1,4 +1,4 @@
-# Chthonic_Metal
+# Chthonic Metal
 A very basic turn-based fighting game in SFML, made for my school's C++ course.
 #### Final grade: 9.5/10 :D
 
